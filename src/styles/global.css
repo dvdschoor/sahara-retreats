@@ -159,9 +159,8 @@ em {
   width: fit-content;
 }
 .brand img {
-  width: 4.5rem;
-  height: 2.8rem;
-  filter: grayscale(1) brightness(0.24);
+  width: 4.4rem;
+  height: auto;
   object-fit: contain;
 }
 .brand span {
@@ -327,8 +326,9 @@ em {
 }
 .manifesto h2 {
   margin-top: 3rem;
-  font-size: clamp(2.5rem, 5.2vw, 4.8rem);
-  line-height: 1.12;
+  max-width: 62rem;
+  font-size: clamp(2.2rem, 4vw, 3.75rem);
+  line-height: 1.15;
   letter-spacing: -0.025em;
 }
 .manifesto h2 em {
@@ -1052,9 +1052,8 @@ footer {
   gap: 1rem;
 }
 .footer-mark img {
-  width: 5rem;
-  height: 5rem;
-  filter: grayscale(1) brightness(0.24);
+  width: 6.25rem;
+  height: auto;
   object-fit: contain;
 }
 .footer-mark p {
@@ -1121,8 +1120,8 @@ html.js [data-reveal] {
     display: none;
   }
   .brand img {
-    width: 3.2rem;
-    height: 2rem;
+    width: 3.6rem;
+    height: auto;
   }
   .brand span {
     font-size: 0.82rem;
@@ -1180,7 +1179,7 @@ html.js [data-reveal] {
   }
   .manifesto h2 {
     margin-top: 2.3rem;
-    font-size: 2.35rem;
+    font-size: 1.9rem;
   }
   .feature-copy {
     display: block;
@@ -1391,7 +1390,7 @@ html.js [data-reveal] {
     font-size: 1.4rem;
   }
   .manifesto h2 {
-    font-size: 2.05rem;
+    font-size: 1.72rem;
   }
   .gallery {
     width: calc(100vw - 1rem);
