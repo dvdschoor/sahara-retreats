@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+public/fonts/
+public/media/
+public/*.png
+public/*.jpg
+src/assets/

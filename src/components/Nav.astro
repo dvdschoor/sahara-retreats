@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import logo from "@/assets/retreat/logo-light.png";
+---
+
+<header id="site-header">
+  <a class="brand" href="#top" aria-label="Sahara Retreats, back to top">
+    <Image src={logo} alt="" width={54} height={54} loading="eager" />
+    <span>Sahara<br />Retreats</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#experience">Experience</a>
+    <a href="#details">Details</a>
+    <a href="#team">Team</a>
+  </nav>
+  <a class="nav-cta" href="#reserve">Reserve your place <span>↘</span></a>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("#site-header");
+  let lastY = window.scrollY;
+  const update = () => {
+    const y = window.scrollY;
+    header?.classList.toggle("is-scrolled", y > 24);
+    header?.classList.toggle("is-hidden", y > lastY + 3 && y > 180);
+    if (y < lastY - 3) header?.classList.remove("is-hidden");
+    lastY = y;
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+</script>

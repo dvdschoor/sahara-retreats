@@ -1,0 +1,316 @@
+---
+import { Image } from "astro:assets";
+import Base from "@/layouts/Base.astro";
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/retreat/*.{jpg,png}",
+  { eager: true },
+);
+
+const image = (name: string) => {
+  const entry = Object.entries(imageModules).find(([path]) => path.endsWith(`/${name}`));
+  if (!entry) throw new Error(`Missing retreat image: ${name}`);
+  return entry[1].default;
+};
+
+const schedule = [
+  ["06:30", "Sunrise Pilates", "Strength, stretches and breathwork to awaken your body."],
+  ["08:00", "Moroccan breakfast", "Fresh fruit, local breads, nut butters, herbal tea and coffee."],
+  ["09:30", "Desert hike", "Walk around 15 km across the dunes with experienced local guides."],
+  ["14:00", "Midday rest", "Lunch at a new camp, with room for journaling and deep rest."],
+  ["17:00", "Restorative movement", "Gentle mobility, recovery and stretching after the trek."],
+  ["18:30", "Sunset magic", "Play, dance, or find your quiet as the sun slips behind the Sahara."],
+  ["19:30", "Evening by the fire", "Dinner under the stars, accompanied by live music from our guides."],
+  ["21:30", "Night under the stars", "Stargaze, with the option to sleep outside beneath the open sky."],
+];
+
+const gallery = [
+  "dune-walk.jpg", "camel-guide.jpg", "ridge-group.jpg", "camp-tent.jpg",
+  "night-silhouette.jpg", "camel-caravan.jpg", "group-ridge.jpg", "nomad-pack.jpg",
+  "sunrise-pilates.jpg", "team-camels.jpg", "campfire.jpg", "desert-lunch.jpg",
+  "camels-ready.jpg", "sunset-movement.jpg", "camel-line.jpg", "distant-camp.jpg",
+  "mat-session.jpg", "desert-camp.png", "camp-day.jpg", "tent-night.jpg",
+  "fire-detail.jpg", "camp-night.jpg", "music-night.jpg", "wide-camels.jpg",
+];
+
+const included = [
+  ["Accommodation", "2 nights in a boutique riad in Marrakesh and 5 nights in authentic Berber desert tents."],
+  ["Guided trek", "A 5-day guided trek of around 15 km per day. Camels carry your backpack; tea, fruit and dates are served along the way."],
+  ["Movement", "4 energising morning Pilates classes and 4 restorative sessions with meditation, mobility and stretching."],
+  ["Moroccan cuisine", "3 nourishing local meals per day, trek snacks and 2 Marrakesh breakfasts. Vegetarian and vegan friendly."],
+  ["Night programme", "Evening campfires, local teas, live music and stargazing beneath the open sky."],
+  ["Transport", "All in-country transport with a dedicated local support team."],
+];
+
+const team = [
+  { name: "Lara Beusenberg", role: "Organiser · Pilates & barre", photo: "team-portrait.jpg" },
+  { name: "Matilde Bonanni", role: "Teacher · Pilates & yoga", photo: "meditation.jpg" },
+  { name: "Linde", role: "Photographer · Group & portraits", photo: "guide-portrait.jpg" },
+];
+---
+
+<Base
+  title="Sahara Retreats — Trek & Movement Adventure"
+  description="An unforgettable 8-day journey through Morocco's Sahara Desert: energising movement, breathtaking hikes and restorative stillness."
+>
+  <section class="hero" id="top">
+    <Image
+      class="hero-image"
+      src={image("og-source.jpg")}
+      alt="A lone figure crossing the rolling dunes of the Sahara"
+      widths={[768, 1280, 1920, 2560]}
+      width={2560}
+      sizes="100vw"
+      quality={82}
+      format="avif"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-shade"></div>
+    <div class="hero-meta" data-hero>
+      <span>Morocco</span><span>March 2027</span><span>8 days · 7 nights</span>
+    </div>
+    <div class="hero-title">
+      <p class="eyebrow light" data-hero>Trek & movement adventure</p>
+      <h1 data-hero>Sahara<br /><em>Retreats</em></h1>
+      <p class="hero-intro" data-hero>
+        Disconnect to reconnect. An adventurous trek through the Moroccan desert,
+        where nature, mindful movement and stillness meet.
+      </p>
+    </div>
+    <a class="scroll-cue" href="#experience" aria-label="Discover the retreat">Discover <span>↓</span></a>
+  </section>
+
+  <section class="manifesto" id="experience">
+    <p class="section-index" data-reveal>01 · The journey</p>
+    <h2 data-reveal>A week in Morocco’s <em>golden desert.</em></h2>
+    <div class="manifesto-copy" data-reveal>
+      <p>Practice Pilates as the sun rises.</p>
+      <p>Hike with nomads and camels.</p>
+      <p>Recover beneath a sky full of stars.</p>
+    </div>
+  </section>
+
+  <section class="feature-grid">
+    <div class="feature-image tall" data-reveal>
+      <Image src={image("desert-tent.png")} alt="Traditional desert camp among the dunes" widths={[480, 800, 1200]} sizes="(min-width: 900px) 48vw, 100vw" />
+    </div>
+    <div class="feature-copy" data-reveal>
+      <p class="eyebrow">The magic of the Sahara</p>
+      <h2>8 days, 7 nights in the Sahara Desert.</h2>
+      <p class="lead">An unforgettable active journey through one of the world’s most striking landscapes.</p>
+      <p>With each step, the Sahara unfolds: golden dunes rising, rocky plateaus stretching wide, silence wrapping around you.</p>
+      <p>Under the morning sun, an energising movement class warms your muscles, activates your body and sharpens your focus for the day’s trek.</p>
+      <p>At day’s end, we land softly with deep stretches, gentle mobility and a wave of calm before sleep.</p>
+      <a class="text-link" href="#details">Explore the details <span>↘</span></a>
+      <button class="text-link film-open" type="button">Watch the retreat film <span>↗</span></button>
+    </div>
+  </section>
+
+  <dialog id="film-dialog" class="film-dialog" aria-label="Sahara retreat film">
+    <button class="lightbox-close" aria-label="Close retreat film">Close ×</button>
+    <video controls preload="none" poster="/og.jpg">
+      <source src="/media/sahara-retreat-film.mp4" type="video/mp4" />
+    </video>
+  </dialog>
+
+  <section class="day" id="rhythm">
+    <div class="day-heading">
+      <p class="section-index" data-reveal>02 · Daily rhythm</p>
+      <h2 data-reveal>From sunrise<br />to <em>starlight.</em></h2>
+      <p data-reveal>Every day, the Sahara leads you deeper into movement and discovery.</p>
+    </div>
+    <div class="schedule">
+      {schedule.map(([time, title, body], index) => (
+        <article class="schedule-item" data-reveal>
+          <span class="schedule-number">{String(index + 1).padStart(2, "0")}</span>
+          <time>{time}</time>
+          <h3>{title}</h3>
+          <p>{body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="night-quote">
+    <Image src={image("tent-night.jpg")} alt="A warmly lit desert tent beneath a starry sky" widths={[768, 1280, 1920]} sizes="100vw" />
+    <blockquote data-reveal>“As stars appear, firelight and music carry you into Moroccan tradition.”</blockquote>
+  </section>
+
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-heading">
+      <div>
+        <p class="section-index" data-reveal>03 · Impressions</p>
+        <h2 data-reveal>Stories from<br /><em>the last trip.</em></h2>
+      </div>
+      <p data-reveal>Dust on your feet, warmth on your skin, and memories that stay long after the desert.</p>
+    </div>
+    <div class="gallery">
+      {gallery.map((name, index) => (
+        <button class:list={["gallery-item", index % 7 === 0 && "wide", index % 5 === 2 && "short"]} data-gallery-index={index} aria-label={`Open retreat photo ${index + 1}`}>
+          <Image src={image(name)} alt="A moment from the previous Sahara retreat" widths={[360, 600, 900]} sizes="(min-width: 900px) 33vw, 50vw" loading="lazy" />
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <dialog id="lightbox" aria-label="Retreat photo viewer">
+    <button class="lightbox-close" aria-label="Close photo viewer">Close ×</button>
+    <img alt="Enlarged retreat impression" />
+    <div class="lightbox-nav">
+      <button data-lightbox-prev aria-label="Previous photo">← Previous</button>
+      <span></span>
+      <button data-lightbox-next aria-label="Next photo">Next →</button>
+    </div>
+  </dialog>
+
+  <section class="details" id="details">
+    <div class="details-intro">
+      <p class="section-index" data-reveal>04 · March 2027</p>
+      <h2 data-reveal>Everything you need.<br /><em>Nothing you don’t.</em></h2>
+    </div>
+    <div class="included-list">
+      {included.map(([title, body], index) => (
+        <article data-reveal>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <h3>{title}</h3>
+          <p>{body}</p>
+        </article>
+      ))}
+    </div>
+    <div class="not-included" data-reveal>
+      <p class="eyebrow">Not included</p>
+      <ul>
+        <li>Flights to and from Morocco</li>
+        <li>Travel insurance (mandatory)</li>
+        <li>Personal expenses, souvenirs and tips</li>
+        <li>Dinner in Marrakesh</li>
+        <li>Optional private photoshoot</li>
+        <li>Sleeping bag — please bring your own</li>
+      </ul>
+      <p class="bonus">Bonus · Private WhatsApp group, a complete travel guide and personal journal prompts.</p>
+    </div>
+  </section>
+
+  <section class="price-section">
+    <div class="price-photo" data-reveal>
+      <Image src={image("trek-wide.jpg")} alt="Camels trekking across a wide desert landscape" widths={[720, 1200, 1800]} sizes="(min-width: 900px) 55vw, 100vw" />
+    </div>
+    <div class="price-card" data-reveal>
+      <p class="eyebrow light">Join us in Morocco</p>
+      <h2>€1,347</h2>
+      <p>One complete 8-day, 7-night retreat package.</p>
+      <p>Secure your place with a €300 non-refundable deposit. The remaining balance can be paid in instalments; we’ll find a plan that works for you.</p>
+      <a class="button light-button" href="#reserve">Reserve your place <span>↘</span></a>
+    </div>
+  </section>
+
+  <section class="team-section" id="team">
+    <div class="team-heading">
+      <p class="section-index" data-reveal>05 · Your guides</p>
+      <h2 data-reveal>Meet your Sahara<br /><em>dream team.</em></h2>
+    </div>
+    <div class="team-grid">
+      {team.map((person, index) => (
+        <article class:list={["team-card", index === 1 && "offset"]} data-reveal>
+          <Image src={image(person.photo)} alt={person.name} widths={[480, 800, 1200]} sizes="(min-width: 900px) 32vw, 100vw" />
+          <span>0{index + 1}</span>
+          <h3>{person.name}</h3>
+          <p>{person.role}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <p class="section-index" data-reveal>06 · From the guest book</p>
+    <div class="quotes">
+      <blockquote data-reveal>
+        “The kind guides led us deep into the desert, where I felt one with nature again. Living with sunrise and sunset, sleeping under the stars and finding fossils made it unforgettable.”
+        <cite>Louise Klinkhamer</cite>
+      </blockquote>
+      <blockquote data-reveal>
+        “My week in the Sahara was unforgettable. Sunrise Pilates woke up muscles I never felt before. My favourite moment? Sharing Moroccan breakfast together on the red dunes.”
+        <cite>Renna Elfrink</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="reserve" id="reserve">
+    <div class="reserve-image">
+      <Image src={image("camel-portrait.png")} alt="Camel in the warm Sahara sun" widths={[600, 900, 1200]} sizes="(min-width: 900px) 42vw, 100vw" />
+    </div>
+    <div class="reserve-form-wrap">
+      <p class="section-index">07 · Sahara retreat</p>
+      <h2>Reserve<br /><em>your spot.</em></h2>
+      <ol>
+        <li>Fill out the form.</li>
+        <li>Receive an email with the payment options.</li>
+        <li>Secure your spot with a €300 deposit, or pay in full.</li>
+      </ol>
+      <form id="reservation-form">
+        <label>Retreat week
+          <select name="week" required><option value="March 2027 — exact dates coming soon">March 2027 — exact dates coming soon</option></select>
+        </label>
+        <label>Name<input name="name" autocomplete="name" required /></label>
+        <label>Email<input type="email" name="email" autocomplete="email" required /></label>
+        <label>Phone <span>(optional)</span><input type="tel" name="phone" autocomplete="tel" /></label>
+        <label>Anything you'd like us to know? <span>(optional)</span><textarea name="message" rows="3"></textarea></label>
+        <button class="button" type="submit">Start your journey <span>↗</span></button>
+        <p class="form-note">Your email app will open with your details ready to send to Lara.</p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const filmDialog = document.querySelector<HTMLDialogElement>("#film-dialog");
+    const film = filmDialog?.querySelector<HTMLVideoElement>("video");
+    document.querySelector(".film-open")?.addEventListener("click", () => filmDialog?.showModal());
+    filmDialog?.querySelector(".lightbox-close")?.addEventListener("click", () => {
+      film?.pause();
+      filmDialog.close();
+    });
+    filmDialog?.addEventListener("click", (event) => {
+      if (event.target === filmDialog) {
+        film?.pause();
+        filmDialog.close();
+      }
+    });
+
+    const form = document.querySelector<HTMLFormElement>("#reservation-form");
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const body = [
+        `Hi Lara, I would like to reserve a place for ${data.get("week")}.`,
+        "",
+        `Name: ${data.get("name")}`,
+        `Email: ${data.get("email")}`,
+        `Phone: ${data.get("phone") || "—"}`,
+        "",
+        `${data.get("message") || ""}`,
+      ].join("\n");
+      window.location.href = `mailto:pilatesbylaar@gmail.com?subject=${encodeURIComponent("Sahara Retreat reservation")}&body=${encodeURIComponent(body)}`;
+    });
+
+    const dialog = document.querySelector<HTMLDialogElement>("#lightbox");
+    const lightboxImage = dialog?.querySelector<HTMLImageElement>("img");
+    const items = [...document.querySelectorAll<HTMLButtonElement>("[data-gallery-index]")];
+    let active = 0;
+    const show = (index: number) => {
+      active = (index + items.length) % items.length;
+      const source = items[active].querySelector("img");
+      if (source && lightboxImage) lightboxImage.src = source.currentSrc || source.src;
+      const count = dialog?.querySelector<HTMLSpanElement>(".lightbox-nav span");
+      if (count) count.textContent = `${active + 1} / ${items.length}`;
+    };
+    items.forEach((item, index) => item.addEventListener("click", () => {
+      show(index);
+      dialog?.showModal();
+    }));
+    dialog?.querySelector(".lightbox-close")?.addEventListener("click", () => dialog.close());
+    dialog?.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => show(active - 1));
+    dialog?.querySelector("[data-lightbox-next]")?.addEventListener("click", () => show(active + 1));
+    dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  </script>
+</Base>
