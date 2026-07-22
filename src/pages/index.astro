@@ -55,14 +55,24 @@ const team = [
 >
   <section class="hero" id="top">
     <div class="hero-title">
-      <p class="hero-date" data-hero>March, 2027 <span>(new dates coming soon)</span></p>
-      <h1 data-hero><em>Sahara</em> Retreats</h1>
-      <p class="hero-subtitle" data-hero>Trek & <em>Movement adventure</em></p>
-      <p class="hero-intro" data-hero>
-        Disconnect to reconnect, an adventurous trek through the Moroccan desert<br />
-        where nature, mindful movement and stillness meet.
-      </p>
-      <a class="pill-button" href="#experience" data-hero>Discover more</a>
+      <div class="hero-reveal" data-hero>
+        <p class="hero-date">March, 2027 <span>(new dates coming soon)</span></p>
+      </div>
+      <div class="hero-reveal hero-heading-reveal" data-hero>
+        <h1><em>Sahara</em> Retreats</h1>
+      </div>
+      <div class="hero-reveal" data-hero>
+        <p class="hero-subtitle">Trek & <em>Movement adventure</em></p>
+      </div>
+      <div class="hero-reveal hero-copy-reveal" data-hero>
+        <p class="hero-intro">
+          Disconnect to reconnect, an adventurous trek through the Moroccan desert<br />
+          where nature, mindful movement and stillness meet.
+        </p>
+      </div>
+      <div class="hero-reveal hero-button-reveal" data-hero>
+        <a class="pill-button" href="#experience">Discover more</a>
+      </div>
     </div>
     <div class="hero-visual">
       <Image
@@ -165,10 +175,17 @@ const team = [
   <section class="gallery-section" id="gallery">
     <div class="gallery-heading">
       <div>
-        <p class="section-index" data-reveal>03 · Impressions</p>
-        <h2 data-reveal>Stories from<br /><em>the last trip.</em></h2>
+        <p class="section-index" data-reveal>Pictures from last trip</p>
+        <h2 data-reveal>Impressions of your<br /><em>dream retreat.</em></h2>
       </div>
-      <p data-reveal>Dust on your feet, warmth on your skin, and memories that stay long after the desert.</p>
+      <div class="gallery-intro" data-reveal>
+        <p>Dust on your feet, warmth on your skin, and memories that stay long after the desert.</p>
+        <div class="gallery-controls" aria-label="Photo strip navigation">
+          <button type="button" data-gallery-prev aria-label="Previous retreat photo">←</button>
+          <span class="gallery-count" aria-live="polite">01 / {String(gallery.length).padStart(2, "0")}</span>
+          <button type="button" data-gallery-next aria-label="Next retreat photo">→</button>
+        </div>
+      </div>
     </div>
     <div class="gallery">
       {gallery.map((name, index) => (
@@ -357,6 +374,23 @@ const team = [
     dialog?.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => show(active - 1));
     dialog?.querySelector("[data-lightbox-next]")?.addEventListener("click", () => show(active + 1));
     dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+
+    const galleryTrack = document.querySelector<HTMLElement>(".gallery");
+    const galleryCount = document.querySelector<HTMLElement>(".gallery-count");
+    let activeGallery = 0;
+    const goToGalleryItem = (index: number) => {
+      activeGallery = (index + items.length) % items.length;
+      items[activeGallery]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      if (galleryCount) galleryCount.textContent = `${String(activeGallery + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+    };
+    document.querySelector("[data-gallery-prev]")?.addEventListener("click", () => goToGalleryItem(activeGallery - 1));
+    document.querySelector("[data-gallery-next]")?.addEventListener("click", () => goToGalleryItem(activeGallery + 1));
+    galleryTrack?.addEventListener("scrollend", () => {
+      const next = items.reduce((closest, item, index) =>
+        Math.abs(item.offsetLeft - galleryTrack.scrollLeft) < Math.abs(items[closest].offsetLeft - galleryTrack.scrollLeft) ? index : closest, 0);
+      activeGallery = next;
+      if (galleryCount) galleryCount.textContent = `${String(next + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+    });
 
     const reviewTrack = document.querySelector<HTMLElement>("[data-review-track]");
     const reviews = [...document.querySelectorAll<HTMLElement>("[data-review]")];

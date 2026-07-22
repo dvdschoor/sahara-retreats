@@ -208,13 +208,28 @@ em {
   padding-top: 1px;
 }
 .hero-title {
-  min-height: 41.5rem;
-  padding: 8.7rem 1.25rem 5.5rem;
+  min-height: 39rem;
+  padding: 8.2rem 1.25rem 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+.hero-reveal {
+  width: 100%;
+  overflow: clip;
+}
+.hero-reveal > * {
+  will-change: transform, opacity;
+}
+.hero-heading-reveal {
+  margin: -0.08em 0;
+  padding: 0.08em 0;
+}
+.hero-copy-reveal,
+.hero-button-reveal {
+  overflow: visible;
 }
 .hero-date {
   color: var(--camel);
@@ -275,12 +290,10 @@ em {
 .hero-visual {
   position: relative;
   z-index: 1;
-  width: calc(100% - 2 * var(--gutter));
-  max-width: 1440px;
-  height: min(64vw, 49rem);
+  width: 100%;
+  height: clamp(30rem, 53vw, 48rem);
   margin: 0 auto;
   overflow: hidden;
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 .hero-image {
   width: 100%;
@@ -292,7 +305,7 @@ em {
 .manifesto {
   position: relative;
   z-index: 2;
-  margin-top: -12rem;
+  margin-top: -11rem;
   background: linear-gradient(
     to bottom,
     rgba(17, 23, 23, 0) 0,
@@ -543,6 +556,7 @@ dialog::backdrop {
 }
 
 .gallery-section {
+  overflow: hidden;
   padding: clamp(6rem, 11vw, 10rem) var(--gutter) var(--gutter);
   background: var(--ivory);
 }
@@ -565,18 +579,48 @@ dialog::backdrop {
 .gallery-heading h2 em {
   font-style: italic;
 }
-.gallery-heading > p {
+.gallery-intro > p {
   max-width: 22rem;
   font-family: "Playfair Display", serif;
 }
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+.gallery-controls button {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.gallery-count {
+  min-width: 4.6rem;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+}
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 0.75rem;
-  max-width: 1440px;
-  margin: 0 auto;
+  width: calc(100% + var(--gutter));
+  max-width: none;
+  margin: 0;
+  padding-right: var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.gallery::-webkit-scrollbar {
+  display: none;
 }
 .gallery-item {
+  flex: 0 0 clamp(19rem, 27vw, 27rem);
   padding: 0;
   overflow: hidden;
   border: 0;
@@ -584,12 +628,15 @@ dialog::backdrop {
   background: #eee4d5;
   cursor: zoom-in;
   aspect-ratio: 3/4;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 .gallery-item.wide {
-  grid-column: span 2;
-  aspect-ratio: 2/1.15;
+  flex-basis: clamp(28rem, 42vw, 42rem);
+  aspect-ratio: 4/3;
 }
 .gallery-item.short {
+  flex-basis: clamp(20rem, 30vw, 30rem);
   aspect-ratio: 4/3;
 }
 .gallery-item img {
@@ -1050,7 +1097,7 @@ footer {
   text-transform: uppercase;
 }
 
-html.js [data-hero],
+html.js [data-hero] > *,
 html.js [data-reveal] {
   opacity: 0;
 }
@@ -1082,8 +1129,8 @@ html.js [data-reveal] {
     display: none;
   }
   .hero-title {
-    min-height: 38rem;
-    padding: 7.5rem 1rem 4.25rem;
+    min-height: 35rem;
+    padding: 7rem 1rem 3.75rem;
   }
   .hero-date {
     font-size: 1.1rem;
@@ -1110,19 +1157,19 @@ html.js [data-reveal] {
     min-height: 3rem;
   }
   .hero-visual {
-    width: calc(100% - 2rem);
-    height: 66vh;
-    min-height: 29rem;
+    width: 100%;
+    height: clamp(16rem, 67vw, 23rem);
+    min-height: 0;
   }
   .manifesto {
-    margin-top: -8rem;
+    margin-top: -6.5rem;
     background: linear-gradient(
       to bottom,
       rgba(17, 23, 23, 0),
-      rgba(17, 23, 23, 0.88) 5rem,
-      var(--night) 8rem
+      rgba(17, 23, 23, 0.88) 4.25rem,
+      var(--night) 6.5rem
     );
-    padding-top: 11.5rem;
+    padding-top: 10rem;
     padding-bottom: 5.5rem;
   }
   .manifesto h2 {
@@ -1204,9 +1251,17 @@ html.js [data-reveal] {
     margin: 2rem 0 1.5rem;
     font-size: 3.6rem;
   }
+  .gallery-intro {
+    margin-top: 2rem;
+  }
   .gallery {
-    grid-template-columns: 1fr 1fr;
     gap: 0.45rem;
+  }
+  .gallery-item,
+  .gallery-item.wide,
+  .gallery-item.short {
+    flex-basis: 78vw;
+    aspect-ratio: 3/4;
   }
   .gallery-item {
     border-radius: 0.5rem;
@@ -1333,11 +1388,7 @@ html.js [data-reveal] {
     font-size: 2.05rem;
   }
   .gallery {
-    display: flex;
     width: calc(100vw - 1rem);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
   }
   .gallery-item,
   .gallery-item.wide,
@@ -1355,7 +1406,7 @@ html.js [data-reveal] {
   html {
     scroll-behavior: auto;
   }
-  html.js [data-hero],
+  html.js [data-hero] > *,
   html.js [data-reveal] {
     opacity: 1;
   }
