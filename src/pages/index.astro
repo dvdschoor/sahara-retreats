@@ -138,9 +138,28 @@ const team = [
     </div>
   </section>
 
-  <section class="night-quote">
-    <Image src={image("tent-night.jpg")} alt="A warmly lit desert tent beneath a starry sky" widths={[768, 1280, 1920]} sizes="100vw" />
-    <blockquote data-reveal>“As stars appear, firelight and music carry you into Moroccan tradition.”</blockquote>
+  <section class="night-story">
+    <div class="night-story-heading">
+      <p class="eyebrow" data-reveal>From sunrise to starlight</p>
+      <h2 data-reveal>
+        As stars appear, firelight and<br />
+        music carry you into <em>Moroccan tradition.</em>
+      </h2>
+    </div>
+    <div class="night-story-grid">
+      <figure data-reveal>
+        <Image src={image("fire-detail.jpg")} alt="Firelight at the Sahara camp" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 82vw" />
+        <figcaption>Firelight · warmth</figcaption>
+      </figure>
+      <figure data-reveal>
+        <Image src={image("tent-night.jpg")} alt="Desert tents beneath a starry sky" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 82vw" />
+        <figcaption>Open sky · stillness</figcaption>
+      </figure>
+      <figure data-reveal>
+        <Image src={image("music-night.jpg")} alt="A local guide sharing music beside the fire" widths={[480, 800, 1200]} sizes="(min-width: 900px) 30vw, 82vw" />
+        <figcaption>Tradition · music</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="gallery-section" id="gallery">
@@ -225,6 +244,16 @@ const team = [
           <p>{person.role}</p>
         </article>
       ))}
+    </div>
+  </section>
+
+  <section class="camel-film" aria-label="Camels crossing the Sahara at sunset">
+    <video autoplay muted loop playsinline preload="metadata" poster="/og.jpg">
+      <source src="/media/sahara-retreat-film.mp4" type="video/mp4" />
+    </video>
+    <div class="camel-film-caption">
+      <span>Crossing the Sahara</span>
+      <span>March 2027 · Morocco</span>
     </div>
   </section>
 
